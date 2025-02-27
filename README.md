@@ -24,11 +24,11 @@ You can try KanbanFlow by opening the `index.html` file in your browser.
 
 1. Clone this repository:
    ```
-   git clone https://github.com/yourusername/kanbanflow.git
+   git clone https://github.com/untitledsolomon/project-manager.git
    ```
 2. Navigate to the project directory:
    ```
-   cd kanbanflow
+   cd project-manager
    ```
 3. Open `index.html` in your web browser
 
