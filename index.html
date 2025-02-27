@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KanbanFlow - Project Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <link rel="stylesheet" href="https://unpkg.com/phosphor-icons@1.4.2/src/css/icons.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <h1>KanbanFlow</h1>
+                </div>
+                <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle Sidebar">
+                    <i class="ph-caret-left"></i>
+                </button>
+            </div>
+
+            <div class="user-profile">
+                <div class="avatar">
+                    <span>JD</span>
+                </div>
+                <div class="user-info">
+                    <h3>John Doe</h3>
+                    <p>Personal Workspace</p>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active">
+                        <a href="#" data-view="dashboard">
+                            <i class="ph-house"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-view="boards">
+                            <i class="ph-kanban"></i>
+                            <span>Boards</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-view="canvas">
+                            <i class="ph-pencil-line"></i>
+                            <span>Canvas</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-view="templates">
+                            <i class="ph-template"></i>
+                            <span>Templates</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-section">
+                <div class="section-header">
+                    <h3>Pinned Boards</h3>
+                    <button class="icon-btn" aria-label="Add Pinned Board">
+                        <i class="ph-plus"></i>
+                    </button>
+                </div>
+                <ul class="pinned-boards">
+                    <li>
+                        <a href="#" data-board-id="1">
+                            <div class="color-indicator" style="background-color: #7C5DFA;"></div>
+                            <span>Personal Tasks</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-board-id="2">
+                            <div class="color-indicator" style="background-color: #00C2FF;"></div>
+                            <span>Project Ideas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-board-id="3">
+                            <div class="color-indicator" style="background-color: #4ECE3D;"></div>
+                            <span>Learning Goals</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="section-header">
+                    <h3>Recent Boards</h3>
+                </div>
+                <ul class="recent-boards">
+                    <li>
+                        <a href="#" data-board-id="4">
+                            <i class="ph-clock"></i>
+                            <span>Website Redesign</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-board-id="5">
+                            <i class="ph-clock"></i>
+                            <span>Book Notes</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-footer">
+                <button class="btn btn-secondary">
+                    <i class="ph-gear"></i>
+                    <span>Settings</span>
+                </button>
+                <button class="btn btn-text">
+                    <i class="ph-question"></i>
+                    <span>Help</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard View -->
+            <div class="view dashboard-view" id="dashboard-view">
+                <header class="content-header">
+                    <h2>Dashboard</h2>
+                    <div class="header-actions">
+                        <button id="create-board-btn" class="btn btn-primary">
+                            <i class="ph-plus"></i>
+                            <span>Create Board</span>
+                        </button>
+                    </div>
+                </header>
+
+                <div class="dashboard-content">
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="ph-kanban"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Total Boards</h3>
+                                <p class="stat-value">5</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="ph-check-square"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Completed Tasks</h3>
+                                <p class="stat-value">12</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="ph-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Pending Tasks</h3>
+                                <p class="stat-value">8</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="boards-grid" id="boards-list">
+                        <!-- Boards will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Board View -->
+            <div class="view board-view hidden" id="active-board">
+                <header class="content-header">
+                    <div class="board-header-left">
+                        <h2 id="board-title">Board Title</h2>
+                        <div class="board-meta">
+                            <span class="board-date">Last edited: Today</span>
+                        </div>
+                    </div>
+                    <div class="board-actions">
+                        <button id="toggle-view-btn" class="btn btn-secondary">
+                            <i class="ph-layout"></i>
+                            <span>Toggle View</span>
+                        </button>
+                        <button id="add-list-btn" class="btn btn-primary">
+                            <i class="ph-plus"></i>
+                            <span>Add List</span>
+                        </button>
+                        <button id="back-to-boards-btn" class="btn btn-text">
+                            <i class="ph-arrow-left"></i>
+                            <span>Back</span>
+                        </button>
+                    </div>
+                </header>
+                <div id="lists-container" class="lists-container">
+                    <!-- Lists will be dynamically added here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for creating a new board -->
+    <div id="create-board-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Board</h2>
+                <button class="close" aria-label="Close">&times;</button>
+            </div>
+            <form id="create-board-form">
+                <div class="form-group">
+                    <label for="board-name">Board Name</label>
+                    <input type="text" id="board-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Board Color</label>
+                    <div class="color-picker">
+                        <div class="color-option selected" style="background-color: #7C5DFA;" data-color="#7C5DFA"></div>
+                        <div class="color-option" style="background-color: #00C2FF;" data-color="#00C2FF"></div>
+                        <div class="color-option" style="background-color: #4ECE3D;" data-color="#4ECE3D"></div>
+                        <div class="color-option" style="background-color: #FF8F00;" data-color="#FF8F00"></div>
+                        <div class="color-option" style="background-color: #FF5252;" data-color="#FF5252"></div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for creating a new list -->
+    <div id="create-list-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New List</h2>
+                <button class="close" aria-label="Close">&times;</button>
+            </div>
+            <form id="create-list-form">
+                <div class="form-group">
+                    <label for="list-name">List Name</label>
+                    <input type="text" id="list-name" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for creating a new card -->
+    <div id="create-card-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Card</h2>
+                <button class="close" aria-label="Close">&times;</button>
+            </div>
+            <form id="create-card-form">
+                <div class="form-group">
+                    <label for="card-title">Card Title</label>
+                    <input type="text" id="card-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="card-description">Description</label>
+                    <textarea id="card-description" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Label</label>
+                    <div class="label-picker">
+                        <div class="label-option" style="background-color: #7C5DFA;" data-color="#7C5DFA"></div>
+                        <div class="label-option" style="background-color: #00C2FF;" data-color="#00C2FF"></div>
+                        <div class="label-option" style="background-color: #4ECE3D;" data-color="#4ECE3D"></div>
+                        <div class="label-option" style="background-color: #FF8F00;" data-color="#FF8F00"></div>
+                        <div class="label-option" style="background-color: #FF5252;" data-color="#FF5252"></div>
+                        <div class="label-option" style="background-color: transparent;" data-color="none">None</div>
+                    </div>
+                </div>
+                <input type="hidden" id="list-id">
+                <input type="hidden" id="label-color" value="none">
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for editing a card -->
+    <div id="edit-card-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Card</h2>
+                <button class="close" aria-label="Close">&times;</button>
+            </div>
+            <form id="edit-card-form">
+                <div class="form-group">
+                    <label for="edit-card-title">Card Title</label>
+                    <input type="text" id="edit-card-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-card-description">Description</label>
+                    <textarea id="edit-card-description" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Label</label>
+                    <div class="label-picker">
+                        <div class="label-option" style="background-color: #7C5DFA;" data-color="#7C5DFA"></div>
+                        <div class="label-option" style="background-color: #00C2FF;" data-color="#00C2FF"></div>
+                        <div class="label-option" style="background-color: #4ECE3D;" data-color="#4ECE3D"></div>
+                        <div class="label-option" style="background-color: #FF8F00;" data-color="#FF8F00"></div>
+                        <div class="label-option" style="background-color: #FF5252;" data-color="#FF5252"></div>
+                        <div class="label-option" style="background-color: transparent;" data-color="none">None</div>
+                    </div>
+                </div>
+                <input type="hidden" id="edit-card-id">
+                <input type="hidden" id="edit-list-id">
+                <input type="hidden" id="edit-label-color" value="none">
+                <div class="form-actions">
+                    <button type="button" id="delete-card-btn" class="btn btn-danger">Delete</button>
+                    <div class="right-actions">
+                        <button type="button" class="btn btn-secondary cancel-btn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
